@@ -19,9 +19,10 @@ class Circle{
     draw(){
         context.beginPath()
         context.arc(this.x,this.y, this.rad,0,Math.PI*2, false)
-        context.strokeStyle = 'blue'
+        context.strokeStyle = 'red'
         context.stroke()
         context.fill()
+        context.fillStyle='red'
     }
 }
 let circles = []
@@ -33,13 +34,22 @@ class Line{
         this.endX = endX
         this.endY = endY
     }
-    draw(){
+    draw(val){
         context.beginPath();
         context.moveTo(this.startX, this.startY);
         context.lineTo(this.endX, this.endY);
         context.strokeStyle = "black";
         context.lineWidth = 3;
         context.stroke();
+        context.fillStyle = "red";
+        context.font = "bold 16px Arial";
+        console.log(Math.pow((this.startX - this.endX), 2))
+        console.log(Math.pow((this.startY - this.endY), 2))
+        let distance = Math.round(Math.sqrt(Math.pow((this.startX - this.endX), 2) + Math.pow((this.startY - this.endY), 2)))
+        console.log("=======" + distance )
+        if(distance !=0){
+            context.fillText(distance, (this.endX + this.startX )/2 +20, (this.endY + this.startY)/2 + 20); 
+        }  
     }
 }
 let lines = []
@@ -112,17 +122,45 @@ function near(nodes, mouseX, mouseY){
     }
     
 }
-let algorithms = [orderedTraversal]
+let algorithms = [orderedTraversal, greedy]
 
 function orderedTraversal(){
     lines = []
     totalLength = 0
     for(let i =0; i < circles.length -1; i++){
         lines.push(new Line(circles[i].x, circles[i].y, circles[i+1].x, circles[i+1].y))
-        totalLength = totalLength + Math.sqrt(Math.pow((circles[i].x - circles[i+1].x), 2) + Math.pow((circles[i].y - circles[i+1].y), 2))
+        totalLength = totalLength + distance(circles[i], circles[i+1])
     }
     console.log(totalLength)
     return lines
+}
+
+function greedy(){
+    lines = []
+    let visited = []
+    let shortest = -1
+    let next = -1
+    let i =0
+    while(visited.length < circles.length){
+        shortest = -1
+        for(let j =1; j < circles.length; j++){
+            if(  (distance(circles[i], circles[j]) < shortest || shortest === -1) && i != j && !visited.includes(circles[j]) ){
+                shortest = distance(circles[i], circles[j])
+                next = j
+            }
+        }
+        visited.push(circles[next])
+        lines.push(new Line(circles[i].x, circles[i].y, circles[next].x, circles[next].y))
+        totalLength = totalLength + distance(circles[i], circles[next])
+        i = next
+        console.log(i)
+    }
+    return lines
+}
+
+
+function distance(p1, p2){
+    return Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2))
 }
 
 //Drawing Function
@@ -131,15 +169,23 @@ function animate(){
     requestAnimationFrame(animate)
     context.clearRect(0,0, WIDTH, HEIGHT)
     for(let i=0; i < circles.length; i++){
-        circles[i].draw()
+        circles[i].draw(i)
     }
 
     if(draw === true){
-        
-        lines = algorithms[0]()
+        let pos = -1
+        let algorithmOptions = document.getElementsByName('algorithmOptions')
+        for(let i =0; i < algorithmOptions.length; i++){
+            if(algorithmOptions[i].checked){
+                pos = i
+            }
+        }
+        lines = algorithms[pos]()
         for(let i=0; i < lines.length; i++){
-            lines[i].draw()
+            lines[i].draw(i)
         }
     }
+     
+
 }
 animate()
