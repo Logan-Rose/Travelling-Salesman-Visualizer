@@ -43,14 +43,15 @@ class Line{
     }
 }
 let lines = []
-
+let draw = false
 //Event Listeners
 let solveButton = document.getElementById("solve")
 solveButton.addEventListener('click',
     function(){
-        lines = []
-        for(let i =0; i < circles.length -1; i++){
-            lines.push(new Line(circles[i].x, circles[i].y, circles[i+1].x, circles[i+1].y))
+        if(draw ===false){
+            draw = true
+        } else{
+            draw =false
         }
     }
 )
@@ -121,8 +122,15 @@ function animate(){
     for(let i=0; i < circles.length; i++){
         circles[i].draw()
     }
-    for(let i=0; i < lines.length; i++){
-        lines[i].draw()
+
+    if(draw === true){
+        lines = []
+        for(let i =0; i < circles.length -1; i++){
+            lines.push(new Line(circles[i].x, circles[i].y, circles[i+1].x, circles[i+1].y))
+        }
+        for(let i=0; i < lines.length; i++){
+            lines[i].draw()
+        }
     }
 }
 animate()
