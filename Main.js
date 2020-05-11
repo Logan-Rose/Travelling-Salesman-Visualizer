@@ -43,6 +43,7 @@ class Line{
     }
 }
 let lines = []
+let totalLength = 0
 let draw = false
 //Event Listeners
 let solveButton = document.getElementById("solve")
@@ -111,8 +112,18 @@ function near(nodes, mouseX, mouseY){
     }
     
 }
+let algorithms = [orderedTraversal]
 
-
+function orderedTraversal(){
+    lines = []
+    totalLength = 0
+    for(let i =0; i < circles.length -1; i++){
+        lines.push(new Line(circles[i].x, circles[i].y, circles[i+1].x, circles[i+1].y))
+        totalLength = totalLength + Math.sqrt(Math.pow((circles[i].x - circles[i+1].x), 2) + Math.pow((circles[i].y - circles[i+1].y), 2))
+    }
+    console.log(totalLength)
+    return lines
+}
 
 //Drawing Function
 
@@ -124,10 +135,8 @@ function animate(){
     }
 
     if(draw === true){
-        lines = []
-        for(let i =0; i < circles.length -1; i++){
-            lines.push(new Line(circles[i].x, circles[i].y, circles[i+1].x, circles[i+1].y))
-        }
+        
+        lines = algorithms[0]()
         for(let i=0; i < lines.length; i++){
             lines[i].draw()
         }
