@@ -4,14 +4,33 @@
         <title>The Travelling Salesman</title>
     </head>
     <body>
-        <canvas></canvas>
-        <form>
-            Algorithm:<br>
-            <input type="radio" name="algorithmOptions" id="OrderedTraversal">Ordered Traversal<br>
-            <input type="radio" name="algorithmOptions" id="Greedy">Greedy
-          </form>
-        <button id="solve">Draw!</button>
-        <script src="Main.js"></script>
+        <div class="explanation">
+            <h1>The Travelling Salesman</h1>
+            The Travellins salesman problem is a problem that I have found to be quite intriguing. The premise is simple, A salesman needs to travel to
+            many towns in an area to sell his goods. The Travelling salesman problem asks if there is an optimal path between all thecities that must be visited.
+            While this problem has been studied thoroughly, a perfectly optimal solution has yet to be found. Click and drag some nodes onto the canvas below,
+            and select an algorithm to visualize!
+
+        </div>
+        
+        <div class="gameWindow">
+            <canvas></canvas>
+            <div class="controls">
+                <form>
+                    Algorithm:<br>
+                    <input type="radio" name="algorithmOptions" id="OrderedTraversal" checked>Ordered Traversal<br>
+                    <input type="radio" name="algorithmOptions" id="Random">Brute Force<br>
+                    <input type="radio" name="algorithmOptions" id="Greedy">Greedy<br>
+                    <input type="radio" name="algorithmOptions" id="PairwiseExchange">pairwiseExchange<br>
+                    <p1>Total length: <span id="totalLength"></span></p1>
+                    
+                </form>
+                <button id="solve">Draw!</button><br><br>
+                <button id="generate">Generate Map</button><br>
+                <span id="generatedCells"></span><input id="slider" type="range" min="1" max="20" value="10" class="slider" id="myRange">
+            </div>
+            <script src="Main.js"></script>
+        </div>
     </body>
 
 </html>

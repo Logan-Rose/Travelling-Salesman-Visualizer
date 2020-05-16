@@ -1,7 +1,38 @@
 canvas{
-    background-image: url("./pei.png");
-    margin-right: 100px
+    background-color: beige;
+    flex: 4;
+    width: 800;
+    height:800;
+    border: solid 2px black;
 }
 body{
-    margin:0px;
+    margin:5px;
+    display: flex;
+    flex-direction: column;
+}
+
+button{
+    width: fit-content;
+    height: fit-content;
+}
+
+.gameWindow{
+    display: flex;
+}
+
+.controls{
+    flex: 1;
+    height: fit-content;
+    border: solid 2px black;
+    margin-left:10px;
+    padding: 5px;
+}
+
+.explanation{
+    border-style: solid;
+    margin-bottom: 5px;
+}
+
+h1{
+    text-align: center;
 }
