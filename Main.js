@@ -3,10 +3,12 @@ let context = canvas.getContext('2d');
 let styles = getComputedStyle(canvas),
 w = parseInt(styles.getPropertyValue("width"), 10),
 h = parseInt(styles.getPropertyValue("height"), 10);
+
 let WIDTH = w;
 let HEIGHT = h;
 let RADIUS = 7;
 let mouseDown = false;
+let changed = true
 
 canvas.width = WIDTH;
 canvas.height = HEIGHT;
@@ -75,6 +77,7 @@ solveButton.addEventListener('click',
         } else{
             draw =false;
         }
+        changed = true
     }
 )
 
@@ -110,6 +113,7 @@ slider.addEventListener('mousemove',
             document.getElementById("generatedCells").innerHTML = slider.value;
             cellNumbers = slider.value;
         }
+
     }
 )
 
@@ -125,6 +129,7 @@ window.addEventListener('mousemove',
             } else{
                 circles[nearest] = new Circle(event.clientX, event.clientY- rect.top, RADIUS);
             }
+            changed = true
         }
     } 
 )
@@ -140,6 +145,7 @@ window.addEventListener('mousedown',
                 circles[nearest] = new Circle(event.clientX, event.clientY- rect.top , RADIUS);
             }
         }
+        changed = true
     } 
 )
 
@@ -151,6 +157,7 @@ window.addEventListener('dblclick',
             if(nearest != -1){
                 circles.splice(nearest, 1);
             }
+            changed = true
         }
     } 
 )
@@ -195,7 +202,25 @@ function greedy(){
 }
 
 function pairwiseExchange(){
-
+    lines = [];
+    let visited = [];
+    let shortest = -1;
+    let next = -1;
+    let i =0;
+    while(visited.length < circles.length){
+        shortest = -1;
+        for(let j =1; j < circles.length; j++){
+            if(  (distance(circles[i], circles[j]) < shortest || shortest === -1) && i != j && !visited.includes(circles[j]) ){
+                shortest = distance(circles[i], circles[j]);
+                next = j;
+            }
+        }
+        visited.push(circles[next]);
+        lines.push(new Line(circles[i], circles[next]));
+        i = next;
+    }
+    console.log(visited);
+    return lines;
 }
 
 function bruteForce(){
@@ -312,25 +337,28 @@ function complete(list){
 
 function animate(){
     requestAnimationFrame(animate);
-    document.getElementById("totalLength").innerHTML = totalLengthLines(lines);
-    context.clearRect(0,0, WIDTH, HEIGHT);
-        
-    for(let i=0; i < circles.length; i++){
-        circles[i].draw(i);
-    }
-    if(draw === true){
-        let pos = -1;
-        let algorithmOptions = document.getElementsByName('algorithmOptions');
-        for(let i =0; i < algorithmOptions.length; i++){
-            if(algorithmOptions[i].checked){
-                pos = i;
+    if(changed){
+        document.getElementById("totalLength").innerHTML = totalLengthLines(lines);
+        context.clearRect(0,0, WIDTH, HEIGHT);
+        for(let i=0; i < circles.length; i++){
+            circles[i].draw(i);
+        }
+        if(draw === true){
+            let pos = -1;
+            let algorithmOptions = document.getElementsByName('algorithmOptions');
+            for(let i =0; i < algorithmOptions.length; i++){
+                if(algorithmOptions[i].checked){
+                    pos = i;
+                }
+            }
+            lines = algorithms[pos]();
+            for(let i=0; i < lines.length; i++){
+                lines[i].draw(i);
             }
         }
-        lines = algorithms[pos]();
-        for(let i=0; i < lines.length; i++){
-            lines[i].draw(i);
-        }
+        changed = false
     }
+
 }
 
 
