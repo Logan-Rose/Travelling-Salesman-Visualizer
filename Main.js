@@ -77,7 +77,6 @@ solveButton.addEventListener('click',
         } else{
             draw =false;
         }
-        changed = true
     }
 )
 
@@ -105,6 +104,7 @@ slider.addEventListener('mousedown',
 slider.addEventListener('mouseup', 
     function(){
         mouseDown = false;
+        
     }
 )
 slider.addEventListener('mousemove', 
@@ -157,7 +157,6 @@ window.addEventListener('dblclick',
             if(nearest != -1){
                 circles.splice(nearest, 1);
             }
-            changed = true
         }
     } 
 )
@@ -165,6 +164,7 @@ window.addEventListener('dblclick',
 window.addEventListener('mouseup',
     function(){
         mouseDown = false;
+        changed = true
     } 
 )
 
