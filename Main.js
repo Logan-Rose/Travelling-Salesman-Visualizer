@@ -187,17 +187,19 @@ function greedy(){
     let i =0;
     while(visited.length < circles.length){
         shortest = -1;
-        for(let j =1; j < circles.length; j++){
-            if(  (distance(circles[i], circles[j]) < shortest || shortest === -1) && i != j && !visited.includes(circles[j]) ){
+        for(let j =0; j < circles.length; j++){
+            if(  (distance(circles[i], circles[j]) < shortest || shortest === -1) && i != j && !visited.includes(circles[j]) && i!=j ){
                 shortest = distance(circles[i], circles[j]);
                 next = j;
             }
         }
         visited.push(circles[next]);
-        lines.push(new Line(circles[i], circles[next]));
         i = next;
     }
-    console.log(complete(lines));
+    console.log(visited)
+    for(let i =0; i < visited.length-1; i++){
+        lines.push(new Line(visited[i], visited[i+1]));
+    }
     return lines;
 }
 
@@ -209,18 +211,40 @@ function pairwiseExchange(){
     let i =0;
     while(visited.length < circles.length){
         shortest = -1;
-        for(let j =1; j < circles.length; j++){
-            if(  (distance(circles[i], circles[j]) < shortest || shortest === -1) && i != j && !visited.includes(circles[j]) ){
+        for(let j =0; j < circles.length; j++){
+            if(  (distance(circles[i], circles[j]) < shortest || shortest === -1) && i != j && !visited.includes(circles[j]) && i!=j ){
                 shortest = distance(circles[i], circles[j]);
                 next = j;
             }
         }
         visited.push(circles[next]);
-        lines.push(new Line(circles[i], circles[next]));
         i = next;
     }
-    console.log(visited);
+    console.log(visited)
+
+    let prevLength= totalLengthPoints(visited)
+    for(let i =0; i < visited.length; i++){
+        for(let j = 0; j < visited.length; j++){
+            temp = visited[i]
+            visited[i] = visited[j]
+            visited[j] = temp
+            if(totalLengthPoints(visited) > prevLength){
+                temp = visited[i]
+                visited[i] = visited[j]
+                visited[j] = temp
+            }
+            //console.log(totalLengthPoints(newVisited) + "is less than" +totalLengthPoints(visited) )
+            prevLength = totalLengthPoints(visited)
+        } 
+    }
+
+    for(let i =0; i < visited.length-1; i++){
+        lines.push(new Line(visited[i], visited[i+1]));
+    }
     return lines;
+
+
+ 
 }
 
 function bruteForce(){
@@ -259,6 +283,21 @@ function bruteForce(){
 let algorithms = [orderedTraversal, bruteForce, greedy, pairwiseExchange];
 
 //Helper functions
+
+function sameContents(l1, l2){
+    for(let i=0; i < l1.length; i++){
+        if(!l2.includes(l1[i])){
+            return false
+        }
+    }
+    for(let i=0; i < l2.length; i++){
+        if(!l1.includes(l2[i])){
+            return false
+        }
+    }
+    return true
+}
+
 function near(nodes, mouseX, mouseY){
     if(nodes.length === 0){
         return -1;
@@ -308,7 +347,6 @@ function totalLengthLines(list){
 
 function totalLengthPoints(list){
     let total = 0;
-    console.log(list[0]);
     for(let i=0; i < list.length -1; i++){
         total = total + Math.round(Math.sqrt(Math.pow((list[i].getX() - list[i+1].getX()), 2) + Math.pow((list[i].getY() - list[i+1].getY()), 2)));
     }
@@ -337,8 +375,8 @@ function complete(list){
 
 function animate(){
     requestAnimationFrame(animate);
+    document.getElementById("totalLength").innerHTML = totalLengthLines(lines);
     if(changed){
-        document.getElementById("totalLength").innerHTML = totalLengthLines(lines);
         context.clearRect(0,0, WIDTH, HEIGHT);
         for(let i=0; i < circles.length; i++){
             circles[i].draw(i);
