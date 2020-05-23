@@ -3,7 +3,7 @@ let context = canvas.getContext('2d');
 let styles = getComputedStyle(canvas),
 w = parseInt(styles.getPropertyValue("width"), 10),
 h = parseInt(styles.getPropertyValue("height"), 10);
-
+let frame;
 let WIDTH = w;
 let HEIGHT = h;
 let RADIUS = 7;
@@ -79,6 +79,65 @@ solveButton.addEventListener('click',
         }
     }
 )
+let clearButton = document.getElementById("clear");
+clearButton.addEventListener('click',
+    function(){
+        context.clearRect(0,0, WIDTH, HEIGHT);
+        draw = false
+        circles = []
+        lines = []
+    }
+)
+
+
+let orderedTraversalButton = document.getElementById("ordered")
+let bruteForceButton = document.getElementById("bruteForce")
+let nearestNeighbourButton = document.getElementById("nearestNeighbour")
+let pairwiseExchangeButton = document.getElementById("pairwiseExchange")
+
+bruteForceButton.addEventListener("mousedown", 
+    function(){
+        draw = false
+        alert("WARNING! \n\nThe Brute Force Algorithm Operates in O(n!) time \nWhile it does find the optimal path, using more than 7 nodes causes severe performance issues \n\n If you are sure you would like to proceed, press draw")
+        bruteForceButton.checked = true
+        document.getElementById("textbox").style.display = "flex" 
+        document.getElementById("algorithmdesc").innerHTML =  
+        `<h2>Algorithm: Brute Force</h2>
+        <h3>Complexity: O(n!)</h3>
+        The Brute Force algorithm operates by calculating every possible path that 
+        includes all nodes, and selectingthe shortest. THis algorithm is the only
+        one that will find a perfectly optimal path every time, however, its time complexity makes 
+        it unfeasable most of the time`
+    }
+)
+
+pairwiseExchangeButton.addEventListener("mousedown",
+    function(){
+        document.getElementById("textbox").style.display = "flex"  
+        document.getElementById("algorithmdesc").innerHTML =  
+        `<h2>Algorithm: Pairwise exchange</h2>
+        <h3>Complexity: O(n<sup>2</sup>)</h3>
+        The Pairwise Exchange algorithm first completes the nearest neighbour algorithm. 
+        Pairs of nodes are then swapped in the traversal order, if swapping the nodes 
+        results in a shorter path, the swap is maintianed, if not, the swap is reversed.`;
+    }
+)
+
+
+nearestNeighbourButton.addEventListener("mousedown",
+    function(){
+        document.getElementById("textbox").style.display = "flex" 
+        document.getElementById("algorithmdesc").innerHTML =  
+        `<h2>Algorithm: Nearest Neighbour</h2>
+        <h3>Complexity: O(n<sup>2</sup>)</h3>
+        The Nearest Neighbour algorighm starts with the first node, from there it travels to the nearest unvisited node.
+        This algorithm usually produces a good, but not optimal result, because at the end of the algorithm, 
+        the distance to reach remaining unvisited nodes may be very high`
+    }
+)
+
+
+
 
 let cellNumbers = 10;
 document.getElementById("generatedCells").innerHTML =  cellNumbers;
@@ -179,7 +238,7 @@ function orderedTraversal(){
     return lines;
 }
 
-function greedy(){
+function nearestNeighbour(){
     lines = [];
     let visited = [];
     let shortest = -1;
@@ -280,7 +339,7 @@ function bruteForce(){
 }
 
 
-let algorithms = [orderedTraversal, bruteForce, greedy, pairwiseExchange];
+let algorithms = [orderedTraversal, bruteForce, nearestNeighbour, pairwiseExchange];
 
 //Helper functions
 
@@ -374,7 +433,7 @@ function complete(list){
 //Drawing Function
 
 function animate(){
-    requestAnimationFrame(animate);
+    frame = requestAnimationFrame(animate);
     document.getElementById("totalLength").innerHTML = totalLengthLines(lines);
     if(changed){
         context.clearRect(0,0, WIDTH, HEIGHT);

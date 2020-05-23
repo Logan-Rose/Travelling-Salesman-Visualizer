@@ -6,6 +6,7 @@ canvas{
     border: solid 2px black;
 }
 body{
+    font-family: Arial, Helvetica, sans-serif;
     margin:5px;
     display: flex;
     flex-direction: column;
@@ -21,18 +22,58 @@ button{
 }
 
 .controls{
-    flex: 1;
     height: fit-content;
     border: solid 2px black;
     margin-left:10px;
-    padding: 5px;
+    padding: 10px;
 }
 
 .explanation{
+    display: flex;
     border-style: solid;
     margin-bottom: 5px;
+    padding: 10px;
+    font-size: 18px;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 h1{
     text-align: center;
+}
+
+h2{
+    margin: 0px;
+}
+h3{
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.sentences{
+    border: solid 2px black;
+    width: fit-content;
+}
+
+#textbox{
+    border: solid 2px black;
+    margin-top: 10px;
+    margin-left:10px;
+    display: none;
+    flex-wrap: wrap;
+}
+
+#algorithmdesc{
+    display: flex;
+    flex-wrap: wrap;
+    flex:1;
+    padding: 5px;
+}
+
+.panel{
+    width: 20%;
+    max-width: 20%;
+    display: flex;
+    flex-direction: column;
 }

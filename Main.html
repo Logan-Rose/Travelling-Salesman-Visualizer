@@ -6,28 +6,37 @@
     <body>
         <div class="explanation">
             <h1>The Travelling Salesman</h1>
-            The Travellins salesman problem is a problem that I have found to be quite intriguing. The premise is simple, A salesman needs to travel to
-            many towns in an area to sell his goods. The Travelling salesman problem asks if there is an optimal path between all thecities that must be visited.
-            While this problem has been studied thoroughly, a perfectly optimal solution has yet to be found. Click and drag some nodes onto the canvas below,
-            and select an algorithm to visualize!
+            <div class="sentences">
+                The Travelling Salesman is a famous problem in combinatorial optimization. Solutions to this problem seek to find the shortest path needed to visit all 
+                nodes on a graph. <br> Currently, there are no feasable algorithms that can find an optimal path in a reasonable running time, however there are various algorithms
+                devised to get very close to optimal. <br>
+                Click anywhere on the board to place a node, select an algorithm, and see the shortest path that can be calculated using each one!
+            </div>
 
         </div>
         
         <div class="gameWindow">
             <canvas></canvas>
-            <div class="controls">
-                <form>
-                    Algorithm:<br>
-                    <input type="radio" name="algorithmOptions" id="OrderedTraversal" checked>Ordered Traversal<br>
-                    <input type="radio" name="algorithmOptions" id="Random">Brute Force<br>
-                    <input type="radio" name="algorithmOptions" id="Greedy">Greedy<br>
-                    <input type="radio" name="algorithmOptions" id="PairwiseExchange">pairwiseExchange<br>
-                    <p1>Total length: <span id="totalLength"></span></p1>
-                    
-                </form>
-                <button id="solve">Draw!</button><br><br>
-                <button id="generate">Generate Map</button><br>
-                <span id="generatedCells"></span><input id="slider" type="range" min="1" max="20" value="10" class="slider" id="myRange">
+            <div class="panel">
+                <div class="controls">
+                    <form>
+                        Algorithm:<br>
+                        <input type="radio" name="algorithmOptions" id="ordered" checked>Ordered Traversal<br>
+                        <input type="radio" name="algorithmOptions" id="bruteForce">Brute Force <br>
+                        <input type="radio" name="algorithmOptions" id="nearestNeighbour">Nearest Neighbour<br>
+                        <input type="radio" name="algorithmOptions" id="pairwiseExchange">pairwiseExchange<br>
+                        <p1>Total length: <span id="totalLength"></span></p1>
+                        
+                    </form>
+                    <button id="solve">Draw!</button>
+                    <button id="clear">Clear!</button>
+                    <br><br>
+                    <button id="generate">Generate Map</button><br>
+                    <span id="generatedCells"></span><input id="slider" type="range" min="1" max="500" value="50" class="slider" id="myRange">
+                </div>
+                <div id="textbox">
+                    <div id="algorithmdesc"></div>
+                </div>
             </div>
             <script src="Main.js"></script>
         </div>
