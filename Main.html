@@ -8,8 +8,8 @@
             <h1>The Travelling Salesman</h1>
             <div class="sentences">
                 The Travelling Salesman is a famous problem in combinatorial optimization. Solutions to this problem seek to find the shortest path needed to visit all 
-                nodes on a graph. <br> Currently, there are no feasable algorithms that can find an optimal path in a reasonable running time, however there are various algorithms
-                devised to get very close to optimal. <br>
+                nodes on a graph. Currently, there are no feasable algorithms that can find an optimal path in a reasonable running time, however there are various algorithms
+                devised to get very close to optimal.
                 Click anywhere on the board to place a node, select an algorithm, and see the shortest path that can be calculated using each one!
             </div>
 
@@ -32,7 +32,9 @@
                     <button id="clear">Clear!</button>
                     <br><br>
                     <button id="generate">Generate Map</button><br>
-                    <span id="generatedCells"></span><input id="slider" type="range" min="1" max="500" value="50" class="slider" id="myRange">
+                    <span id="generatedCells"></span><input id="slider" type="range" min="1" max="200" value="50" class="slider" id="myRange"><br>
+                    Choose custom background (Not working yet): <br>
+                    <input id="chooseBackground" type="file"/>
                 </div>
                 <div id="textbox">
                     <div id="algorithmdesc"></div>

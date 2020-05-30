@@ -137,9 +137,7 @@ nearestNeighbourButton.addEventListener("mousedown",
 )
 
 
-
-
-let cellNumbers = 10;
+let cellNumbers = 50;
 document.getElementById("generatedCells").innerHTML =  cellNumbers;
 let generateCells = document.getElementById("generate");
 generateCells.addEventListener('click',
@@ -163,7 +161,8 @@ slider.addEventListener('mousedown',
 slider.addEventListener('mouseup', 
     function(){
         mouseDown = false;
-        
+        document.getElementById("generatedCells").innerHTML = slider.value;
+        cellNumbers = slider.value;
     }
 )
 slider.addEventListener('mousemove', 
@@ -175,6 +174,15 @@ slider.addEventListener('mousemove',
 
     }
 )
+
+let imageUpload = document.getElementById("chooseBackground")
+let imageSource = ""
+imageUpload.addEventListener('change', function(){
+    console.log(imageUpload.files[0].name)
+})
+
+
+
 
 //Map listeners
 let draw = false;
@@ -301,8 +309,6 @@ function pairwiseExchange(){
         lines.push(new Line(visited[i], visited[i+1]));
     }
     return lines;
-
-
  
 }
 
