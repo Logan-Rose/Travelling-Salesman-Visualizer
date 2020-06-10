@@ -52,6 +52,7 @@ h3{
 
 .sentences{
     border: solid 2px black;
+    padding:2px;
     width: fit-content;
 }
 
