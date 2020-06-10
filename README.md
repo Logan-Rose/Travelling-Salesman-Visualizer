@@ -11,3 +11,5 @@ Using the Pairwise Exchange Algorithm
 The program also includes a control panel, where yo can select an algorithm, generate a random grid of a specified size, or upload an image (perhaps of a map) on the background
 
 ![App Demonstration](/resources/controls.png)
+
+To use this program yourself, just download this repository and open Main.html in your browser!
